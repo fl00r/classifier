@@ -1,19 +1,43 @@
 # Classifier
 
+Inspired by [Denis Bazhenov](http://bazhenov.me/)
+
+	* http://bazhenov.me/blog/2012/06/11/naive-bayes.html
+	* http://bazhenov.me/blog/2013/04/23/maximum-entropy-classifier.html
+
 [Naive Bayes classifier](http://en.wikipedia.org/wiki/Naive_Bayes_classifier) and [Principle of maximum entropy classifier](http://en.wikipedia.org/wiki/Principle_of_maximum_entropy) implementations on Ruby.
 
 ## Usage
 
 ```ruby
 require 'classifier'
-bayes = Classifier::Bayes.new("SPAM", "HAM", normalize: true)
-bayes.cls("SPAM").teach("Buy some viagra")
-bayes.cls("SPAM").teach("Get million dollars for free")
-bayes.cls("SPAM").teach("Enlarge your mojo!")
-bayes.cls("HAM").teach("Party this evening! Buy some lemonade!")
 
-bayes.classify("Buy some lemonade for free! Total sale!")
-#=> [["HAM", 0.684], ["SPAM", 0.321]]
+@bayes = Classifier::Bayes.new(["SPAM", "HAM"])
+
+spam = @bayes.cls("SPAM")
+ham = @bayes.cls("HAM")
+
+spam.teach("Buy viagra free without a reciepe")
+spam.teach("Enlarge your mojo twice for free")
+spam.teach("Total sale! Last autumn collection!")
+spam.teach("Mojo and Evil for free!")
+
+ham.teach("Hi Peter! Let's go to sale in the moll?")
+ham.teach("Buy some lemonade for party!")
+ham.teach("It's a party time!")
+ham.teach("Waiting in the moll")
+
+res = @bayes.classify("Buy some viagra please!")
+p res
+#=> [["SPAM", 0.8], ["HAM", 0.19999999999999998]]
+
+res = @bayes.classify("It is party in the mall")
+p res
+#=> [["HAM", 0.9818181818181818], ["SPAM", 0.018181818181818146]]
+
+res = @bayes.classify("New tokens presented")
+p res
+#=> [["SPAM", 0.5], ["HAM", 0.5]]
 ```
 
 ## Contributing

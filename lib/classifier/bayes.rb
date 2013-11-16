@@ -54,8 +54,6 @@ module Classifier
           multinomial_bayes(str, cls_name, smoothing)
         when :binomial
           binomial_bayes(str, cls_name, smoothing)
-        else
-          raise ":multinomial and :binomial Bayes Models supported, not bmodel"
         end
 
         bayes << [cls_name, cls_bayes]

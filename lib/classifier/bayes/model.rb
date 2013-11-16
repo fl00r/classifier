@@ -80,6 +80,7 @@ module Classifier
 
     private
 
+    # ...
 
   end
 end
